@@ -37,7 +37,6 @@ func loggingHandler(next http.Handler) http.Handler {
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	panic("I'm panicking!")
 	fmt.Fprintf(w, "Welcome to the about page.")
 	fmt.Fprintf(w, "Params: %v", context.GetAll(r))
 }
