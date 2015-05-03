@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/justinas/alice"
+	"gopkg.in/mgo.v2"
 )
 
 func recoverHandler(next http.Handler) http.Handler {
@@ -42,6 +43,13 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	log.Printf("Connecting to database...")
+	session, err := mgo.Dial("localhost")
+	if err != nil {
+		log.Printf("Failed to connect to server: %v\n", err)
+		return
+	}
+	defer session.Close()
 	common := alice.New(context.ClearHandler, loggingHandler, recoverHandler)
 
 	router := NewRouter()
